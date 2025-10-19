@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+package order.v1;
+
+option go_package = "github.com/Anabol1ks/orderhub-pkg-proto/proto/order/v1;orderv1";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+import "common/v1/common.proto";
+
+
+// ====== Сервис заказов ======
+
+service OrderService {
+  // Создание заказа (асинхронная сага запускается в сервисе)
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+
+  // Получение заказа по ID (проверка принадлежности в сервисе по JWT)
+  rpc GetOrder(GetOrderRequest) returns (GetOrderResponse);
+
+  // Список заказов текущего пользователя (или всех, если роль ADMIN)
+  rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse);
+
+  // Отмена заказа (запускает компенсационную сагу)
+  rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse);
+}
+
+
+// Единица позиции заказа (в ответах)
+message OrderItem {
+  orderhub.common.v1.UUID product_id = 1 [(validate.rules).message.required = true];
+  uint32 quantity         = 2 [(validate.rules).uint32  = {gt: 0, lte: 100000}];
+  int64  unit_price_cents = 3; // цена за штуку в мин. единицах валюты
+  int64  line_total_cents = 4; // unit_price_cents * quantity
+  string currency_code    = 5 [(validate.rules).string = {len: 3}]; // ISO-4217 (например "USD", "EUR", "RUB")
+}
+
+// Входная позиция при создании (цены сервер может игнорировать/пересчитать)
+message OrderItemInput {
+  orderhub.common.v1.UUID product_id = 1 [(validate.rules).message.required = true];
+  uint32 quantity            = 2 [(validate.rules).uint32 = {gt: 0}];
+}
+
+// Сущность заказа
+message Order {
+  orderhub.common.v1.UUID id      = 1 [(validate.rules).message.required = true];
+  orderhub.common.v1.UUID user_id = 2 [(validate.rules).message.required = true];
+  orderhub.common.v1.OrderStatus status         = 3;
+  repeated OrderItem items   = 4;
+  int64  total_price_cents   = 5; // сумма по позициям
+  string currency_code       = 6 [(validate.rules).string = {len: 3}];
+  string cancel_reason       = 7; // если CANCELLED — краткая причина (необязательно)
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}
+
+// ====== RPC: CreateOrder ======
+
+message CreateOrderRequest {
+  // минимум одна позиция
+  repeated OrderItemInput items = 1 [(validate.rules).repeated = {min_items: 1}];
+
+  // идемпотенси-ключ (рекомендовано): одинаковый ключ -> повтор одного и того же заказа
+  string comment = 10 [(validate.rules).string = {max_len: 500}];
+}
+
+message CreateOrderResponse {
+  Order order = 1;
+}
+
+// ====== RPC: GetOrder ======
+
+message GetOrderRequest {
+  orderhub.common.v1.UUID order_id = 1 [(validate.rules).message.required = true];
+}
+
+message GetOrderResponse {
+  Order order = 1;
+}
+
+// ====== RPC: ListOrders ======
+
+message ListOrdersRequest {
+  // пагинация (простая): limit/offset; по умолчанию user_id берём из JWT в интерсепторе
+  int32 limit  = 1 [(validate.rules).int32 = {gte: 1, lte: 100}];
+  int32 offset = 2 [(validate.rules).int32 = {gte: 0}];
+
+  // опциональный фильтр по статусу
+  orderhub.common.v1.OrderStatus status = 3;
+
+  // только для админов: смотреть заказы конкретного пользователя
+  orderhub.common.v1.UUID user_id = 4; // опционально
+}
+
+message ListOrdersResponse {
+  repeated Order orders = 1;
+  int32 total           = 2; // общее кол-во (для построения пагинации)
+  int32 next_offset     = 3; // offset для следующей страницы (или = -1 если больше нет)
+}
+
+// ====== RPC: CancelOrder ======
+
+message CancelOrderRequest {
+  orderhub.common.v1.UUID order_id = 1 [(validate.rules).message.required = true];
+  string reason   = 2 [(validate.rules).string = {max_len: 500}];
+}
+
+message CancelOrderResponse {
+  Order order = 1;
+}
+

@@ -9,7 +9,15 @@ message UUID { string value = 1; }
 // Общие роли на весь проект
 enum Role {
   ROLE_UNSPECIFIED = 0;
-  ROLE_CUSTOMER    = 1;
+  ROLE_CUSTOMER    = 1; 
   ROLE_VENDOR      = 2;
   ROLE_ADMIN       = 3;
+}
+
+// Статус заказа (минимальный набор для MVP)
+enum OrderStatus {
+  ORDER_STATUS_UNSPECIFIED = 0;
+  ORDER_STATUS_PENDING     = 1; // создан, ожидает завершения саги
+  ORDER_STATUS_CONFIRMED   = 2; // оплачен и зарезервирован
+  ORDER_STATUS_CANCELLED   = 3; // отменён (пользователем или по ошибке)
 }

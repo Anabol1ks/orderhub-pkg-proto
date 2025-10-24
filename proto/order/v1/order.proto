@@ -4,7 +4,6 @@ package order.v1;
 
 option go_package = "github.com/Anabol1ks/orderhub-pkg-proto/proto/order/v1;orderv1";
 
-import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "validate/validate.proto";
 import "common/v1/common.proto";

@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+package inventory.v1;
+
+option go_package = "github.com/Anabol1ks/orderhub-pkg-proto/proto/inventory/v1;inventoryv1";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import "validate/validate.proto";
+import "common/v1/common.proto";
+
+service InventoryService {
+  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse);
+  rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse);
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse);
+  rpc ListProducts(ListProductsRequest) returns (ListProductsResponse);
+  rpc DeleteProduct(DeleteProductRequest) returns (google.protobuf.Empty);
+
+
+  rpc BatchGetProducts(BatchGetProductsRequest) returns (BatchGetProductsResponse);
+
+  rpc GetStock(GetStockRequest) returns (GetStockResponse);
+  rpc SetStock(SetStockRequest) returns (SetStockResponse);
+  rpc AdjustStock(AdjustStockRequest) returns (AdjustStockResponse);
+
+  rpc Reserve(ReserveRequest) returns (ReserveResponse);
+  rpc Release(ReleaseRequest) returns (google.protobuf.Empty);
+  rpc Confirm(ConfirmRequest) returns (google.protobuf.Empty);
+}
+
+message Product {
+  orderhub.common.v1.UUID id = 1;
+  orderhub.common.v1.UUID order_id = 2;
+  string sku = 3[(validate.rules).string = {min_len: 1, max_len: 64}];
+  string name = 4[(validate.rules).string = {min_len: 1, max_len: 255}];
+  string description = 5[(validate.rules).string = {max_len: 4128}];
+  int64 price_cents = 6[(validate.rules).int64 = {gte: 0}];
+  string currency_code = 7 [(validate.rules).string = {len: 3}];
+  bool is_active = 8;
+
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+message ProductInput {
+  orderhub.common.v1.UUID vendor_id = 1 [(validate.rules).message.required = true];
+  string sku = 2[(validate.rules).string = {min_len: 1, max_len: 64}];
+  string name = 3[(validate.rules).string = {min_len: 1, max_len: 255}];
+  string description = 4[(validate.rules).string = {max_len: 4128}];
+  int64 price_cents = 5[(validate.rules).int64 = {gte: 0}];
+  string currency_code = 6 [(validate.rules).string = {len: 3}];
+  bool is_active = 7;
+}
+
+message ProductPatch {
+  google.protobuf.StringValue sku           = 1 [(validate.rules).string = {min_len: 1, max_len: 64}];
+  google.protobuf.StringValue name          = 2 [(validate.rules).string = {min_len: 1, max_len: 255}];
+  google.protobuf.StringValue description   = 3 [(validate.rules).string = {max_len: 4128}];
+  google.protobuf.Int64Value  price_cents   = 4 [(validate.rules).int64  = {gte: 0}];
+  google.protobuf.StringValue currency_code = 5 [(validate.rules).string = {len: 3}];
+  google.protobuf.BoolValue   is_active     = 6;
+}
+
+message CreateProductRequest {
+  ProductInput product = 1 [(validate.rules).message.required = true];
+}
+
+message CreateProductResponse {
+  Product product = 1;
+}
+
+message UpdateProductRequest {
+  orderhub.common.v1.UUID product_id = 1 [(validate.rules).message.required = true];
+  ProductPatch patch = 2 [(validate.rules).message.required = true];
+}
+
+message UpdateProductResponse {
+  Product product = 1;
+}
+
+message DeleteProductRequest {
+  orderhub.common.v1.UUID product_id = 1 [(validate.rules).message.required = true];
+}
+
+message GetProductRequest {
+  orderhub.common.v1.UUID product_id = 1 [(validate.rules).message.required = true];
+}
+
+message GetProductResponse {
+  Product product = 1;
+}
+
+message ListProductsRequest {
+  orderhub.common.v1.UUID vendor_id = 1;
+
+  string query = 2 [(validate.rules).string = {min_len: 1, max_len: 255}];
+  bool only_active = 3;
+
+  int32 limit = 10 [(validate.rules).int32 = {gte: 1, lte: 100}];
+  int32 offset = 11 [(validate.rules).int32 = {gte: 0}];
+}
+
+message ListProductsResponse {
+  repeated Product products = 1;
+  int32 total = 2;
+  int32 next_offset = 3;
+}
+
+message BatchGetProductsRequest {
+  repeated orderhub.common.v1.UUID product_ids = 1 [(validate.rules).repeated = {min_items: 1}];
+}
+
+message BatchGetProductsResponse {
+  repeated Product products = 1;
+}
+
+
+message Stock {
+  orderhub.common.v1.UUID product_id = 1;
+  int32 available = 2;
+  int32 reserved = 3;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+message GetStockRequest {
+  orderhub.common.v1.UUID product_id = 1 [(validate.rules).message.required = true];
+}
+
+message GetStockResponse {
+  Stock stock = 1;
+}
+
+message SetStockRequest {
+  orderhub.common.v1.UUID product_id = 1 [(validate.rules).message.required = true];
+  int32 available = 2 [(validate.rules).int32 = {gte: 0}];
+}
+
+message SetStockResponse {
+  Stock stock = 1;
+}
+
+message AdjustStockRequest {
+  orderhub.common.v1.UUID product_id = 1 [(validate.rules).message.required = true];
+  int32 delta                        = 2; // может быть отрицательным/положительным
+}
+message AdjustStockResponse {
+  Stock stock = 1;
+}
+
+message ReserveRequest {
+  orderhub.common.v1.UUID product_id = 1 [(validate.rules).message.required = true];
+  uint32 quantity = 2 [(validate.rules).uint32 = {gte: 0}];
+}
+
+message ReserveOkItem {
+  orderhub.common.v1.UUID product_id = 1;
+  uint32 quantity = 2;
+}
+
+message ReserveFailedItem {
+  orderhub.common.v1.UUID product_id = 1;
+  string requested = 2;
+  string reason = 3 [(validate.rules).string = {max_len: 200}];
+}
+
+message ReserveResponse {
+  repeated ReserveOkItem ok_items = 1;
+  repeated ReserveFailedItem failed_items = 2;
+}
+
+message ReleaseRequest {
+  orderhub.common.v1.UUID order_id = 1 [(validate.rules).message.required = true];
+}
+
+message ConfirmRequest {
+  orderhub.common.v1.UUID order_id = 1 [(validate.rules).message.required = true];
+}

@@ -29,7 +29,7 @@ const (
 type Product struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            *v1.UUID               `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	OrderId       *v1.UUID               `protobuf:"bytes,2,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	VendorId      *v1.UUID               `protobuf:"bytes,2,opt,name=vendor_id,json=vendorId,proto3" json:"vendor_id,omitempty"`
 	Sku           string                 `protobuf:"bytes,3,opt,name=sku,proto3" json:"sku,omitempty"`
 	Name          string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
 	Description   string                 `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
@@ -79,9 +79,9 @@ func (x *Product) GetId() *v1.UUID {
 	return nil
 }
 
-func (x *Product) GetOrderId() *v1.UUID {
+func (x *Product) GetVendorId() *v1.UUID {
 	if x != nil {
-		return x.OrderId
+		return x.VendorId
 	}
 	return nil
 }
@@ -1514,10 +1514,10 @@ var File_inventory_v1_inventory_proto protoreflect.FileDescriptor
 
 const file_inventory_v1_inventory_proto_rawDesc = "" +
 	"\n" +
-	"\x1cinventory/v1/inventory.proto\x12\finventory.v1\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x16common/v1/common.proto\"\xbd\x03\n" +
+	"\x1cinventory/v1/inventory.proto\x12\finventory.v1\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x17validate/validate.proto\x1a\x16common/v1/common.proto\"\xbf\x03\n" +
 	"\aProduct\x12(\n" +
-	"\x02id\x18\x01 \x01(\v2\x18.orderhub.common.v1.UUIDR\x02id\x123\n" +
-	"\border_id\x18\x02 \x01(\v2\x18.orderhub.common.v1.UUIDR\aorderId\x12\x1b\n" +
+	"\x02id\x18\x01 \x01(\v2\x18.orderhub.common.v1.UUIDR\x02id\x125\n" +
+	"\tvendor_id\x18\x02 \x01(\v2\x18.orderhub.common.v1.UUIDR\bvendorId\x12\x1b\n" +
 	"\x03sku\x18\x03 \x01(\tB\t\xfaB\x06r\x04\x10\x01\x18@R\x03sku\x12\x1e\n" +
 	"\x04name\x18\x04 \x01(\tB\n" +
 	"\xfaB\ar\x05\x10\x01\x18\xff\x01R\x04name\x12*\n" +
@@ -1697,7 +1697,7 @@ var file_inventory_v1_inventory_proto_goTypes = []any{
 }
 var file_inventory_v1_inventory_proto_depIdxs = []int32{
 	27, // 0: inventory.v1.Product.id:type_name -> orderhub.common.v1.UUID
-	27, // 1: inventory.v1.Product.order_id:type_name -> orderhub.common.v1.UUID
+	27, // 1: inventory.v1.Product.vendor_id:type_name -> orderhub.common.v1.UUID
 	28, // 2: inventory.v1.Product.created_at:type_name -> google.protobuf.Timestamp
 	28, // 3: inventory.v1.Product.updated_at:type_name -> google.protobuf.Timestamp
 	27, // 4: inventory.v1.ProductInput.vendor_id:type_name -> orderhub.common.v1.UUID

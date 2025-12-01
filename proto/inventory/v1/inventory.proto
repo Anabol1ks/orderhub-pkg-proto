@@ -30,7 +30,7 @@ service InventoryService {
 
 message Product {
   orderhub.common.v1.UUID id = 1;
-  orderhub.common.v1.UUID order_id = 2;
+  orderhub.common.v1.UUID vendor_id = 2;
   string sku = 3[(validate.rules).string = {min_len: 1, max_len: 64}];
   string name = 4[(validate.rules).string = {min_len: 1, max_len: 255}];
   string description = 5[(validate.rules).string = {max_len: 4128}];

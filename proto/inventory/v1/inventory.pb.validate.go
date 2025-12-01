@@ -86,11 +86,11 @@ func (m *Product) validate(all bool) error {
 	}
 
 	if all {
-		switch v := interface{}(m.GetOrderId()).(type) {
+		switch v := interface{}(m.GetVendorId()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, ProductValidationError{
-					field:  "OrderId",
+					field:  "VendorId",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -98,16 +98,16 @@ func (m *Product) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, ProductValidationError{
-					field:  "OrderId",
+					field:  "VendorId",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetOrderId()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetVendorId()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ProductValidationError{
-				field:  "OrderId",
+				field:  "VendorId",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}

@@ -164,7 +164,7 @@ message ReserveOkItem {
 
 message ReserveFailedItem {
   orderhub.common.v1.UUID product_id = 1;
-  string requested = 2;
+  uint32 requested = 2;
   string reason = 3 [(validate.rules).string = {max_len: 200}];
 }
 

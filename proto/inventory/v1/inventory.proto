@@ -43,13 +43,12 @@ message Product {
 }
 
 message ProductInput {
-  orderhub.common.v1.UUID vendor_id = 1 [(validate.rules).message.required = true];
-  string sku = 2[(validate.rules).string = {min_len: 1, max_len: 64}];
-  string name = 3[(validate.rules).string = {min_len: 1, max_len: 255}];
-  string description = 4[(validate.rules).string = {max_len: 4128}];
-  int64 price_cents = 5[(validate.rules).int64 = {gte: 0}];
-  string currency_code = 6 [(validate.rules).string = {len: 3}];
-  bool is_active = 7;
+  string sku = 1[(validate.rules).string = {min_len: 1, max_len: 64}];
+  string name = 2[(validate.rules).string = {min_len: 1, max_len: 255}];
+  string description = 3[(validate.rules).string = {max_len: 4128}];
+  int64 price_cents = 4[(validate.rules).int64 = {gte: 0}];
+  string currency_code = 5 [(validate.rules).string = {len: 3}];
+  bool is_active = 6;
 }
 
 message ProductPatch {

@@ -1206,7 +1206,7 @@ func (x *AdjustStockResponse) GetStock() *Stock {
 	return nil
 }
 
-type ReserveRequest struct {
+type ReserveItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ProductId     *v1.UUID               `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
 	Quantity      uint32                 `protobuf:"varint,2,opt,name=quantity,proto3" json:"quantity,omitempty"`
@@ -1214,9 +1214,61 @@ type ReserveRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
+func (x *ReserveItem) Reset() {
+	*x = ReserveItem{}
+	mi := &file_inventory_v1_inventory_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReserveItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReserveItem) ProtoMessage() {}
+
+func (x *ReserveItem) ProtoReflect() protoreflect.Message {
+	mi := &file_inventory_v1_inventory_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReserveItem.ProtoReflect.Descriptor instead.
+func (*ReserveItem) Descriptor() ([]byte, []int) {
+	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ReserveItem) GetProductId() *v1.UUID {
+	if x != nil {
+		return x.ProductId
+	}
+	return nil
+}
+
+func (x *ReserveItem) GetQuantity() uint32 {
+	if x != nil {
+		return x.Quantity
+	}
+	return 0
+}
+
+type ReserveRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OrderId       *v1.UUID               `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	Items         []*ReserveItem         `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
 func (x *ReserveRequest) Reset() {
 	*x = ReserveRequest{}
-	mi := &file_inventory_v1_inventory_proto_msgTypes[21]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1228,7 +1280,7 @@ func (x *ReserveRequest) String() string {
 func (*ReserveRequest) ProtoMessage() {}
 
 func (x *ReserveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_inventory_v1_inventory_proto_msgTypes[21]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1241,21 +1293,21 @@ func (x *ReserveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReserveRequest.ProtoReflect.Descriptor instead.
 func (*ReserveRequest) Descriptor() ([]byte, []int) {
-	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{21}
+	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{22}
 }
 
-func (x *ReserveRequest) GetProductId() *v1.UUID {
+func (x *ReserveRequest) GetOrderId() *v1.UUID {
 	if x != nil {
-		return x.ProductId
+		return x.OrderId
 	}
 	return nil
 }
 
-func (x *ReserveRequest) GetQuantity() uint32 {
+func (x *ReserveRequest) GetItems() []*ReserveItem {
 	if x != nil {
-		return x.Quantity
+		return x.Items
 	}
-	return 0
+	return nil
 }
 
 type ReserveOkItem struct {
@@ -1268,7 +1320,7 @@ type ReserveOkItem struct {
 
 func (x *ReserveOkItem) Reset() {
 	*x = ReserveOkItem{}
-	mi := &file_inventory_v1_inventory_proto_msgTypes[22]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1280,7 +1332,7 @@ func (x *ReserveOkItem) String() string {
 func (*ReserveOkItem) ProtoMessage() {}
 
 func (x *ReserveOkItem) ProtoReflect() protoreflect.Message {
-	mi := &file_inventory_v1_inventory_proto_msgTypes[22]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1293,7 +1345,7 @@ func (x *ReserveOkItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReserveOkItem.ProtoReflect.Descriptor instead.
 func (*ReserveOkItem) Descriptor() ([]byte, []int) {
-	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{22}
+	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ReserveOkItem) GetProductId() *v1.UUID {
@@ -1321,7 +1373,7 @@ type ReserveFailedItem struct {
 
 func (x *ReserveFailedItem) Reset() {
 	*x = ReserveFailedItem{}
-	mi := &file_inventory_v1_inventory_proto_msgTypes[23]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1333,7 +1385,7 @@ func (x *ReserveFailedItem) String() string {
 func (*ReserveFailedItem) ProtoMessage() {}
 
 func (x *ReserveFailedItem) ProtoReflect() protoreflect.Message {
-	mi := &file_inventory_v1_inventory_proto_msgTypes[23]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1346,7 +1398,7 @@ func (x *ReserveFailedItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReserveFailedItem.ProtoReflect.Descriptor instead.
 func (*ReserveFailedItem) Descriptor() ([]byte, []int) {
-	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{23}
+	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *ReserveFailedItem) GetProductId() *v1.UUID {
@@ -1380,7 +1432,7 @@ type ReserveResponse struct {
 
 func (x *ReserveResponse) Reset() {
 	*x = ReserveResponse{}
-	mi := &file_inventory_v1_inventory_proto_msgTypes[24]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1392,7 +1444,7 @@ func (x *ReserveResponse) String() string {
 func (*ReserveResponse) ProtoMessage() {}
 
 func (x *ReserveResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_inventory_v1_inventory_proto_msgTypes[24]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1405,7 +1457,7 @@ func (x *ReserveResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReserveResponse.ProtoReflect.Descriptor instead.
 func (*ReserveResponse) Descriptor() ([]byte, []int) {
-	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{24}
+	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *ReserveResponse) GetOkItems() []*ReserveOkItem {
@@ -1431,7 +1483,7 @@ type ReleaseRequest struct {
 
 func (x *ReleaseRequest) Reset() {
 	*x = ReleaseRequest{}
-	mi := &file_inventory_v1_inventory_proto_msgTypes[25]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1443,7 +1495,7 @@ func (x *ReleaseRequest) String() string {
 func (*ReleaseRequest) ProtoMessage() {}
 
 func (x *ReleaseRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_inventory_v1_inventory_proto_msgTypes[25]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1456,7 +1508,7 @@ func (x *ReleaseRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReleaseRequest.ProtoReflect.Descriptor instead.
 func (*ReleaseRequest) Descriptor() ([]byte, []int) {
-	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{25}
+	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *ReleaseRequest) GetOrderId() *v1.UUID {
@@ -1475,7 +1527,7 @@ type ConfirmRequest struct {
 
 func (x *ConfirmRequest) Reset() {
 	*x = ConfirmRequest{}
-	mi := &file_inventory_v1_inventory_proto_msgTypes[26]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1487,7 +1539,7 @@ func (x *ConfirmRequest) String() string {
 func (*ConfirmRequest) ProtoMessage() {}
 
 func (x *ConfirmRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_inventory_v1_inventory_proto_msgTypes[26]
+	mi := &file_inventory_v1_inventory_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1500,7 +1552,7 @@ func (x *ConfirmRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfirmRequest.ProtoReflect.Descriptor instead.
 func (*ConfirmRequest) Descriptor() ([]byte, []int) {
-	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{26}
+	return file_inventory_v1_inventory_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *ConfirmRequest) GetOrderId() *v1.UUID {
@@ -1611,11 +1663,14 @@ const file_inventory_v1_inventory_proto_rawDesc = "" +
 	"product_id\x18\x01 \x01(\v2\x18.orderhub.common.v1.UUIDB\b\xfaB\x05\x8a\x01\x02\x10\x01R\tproductId\x12\x14\n" +
 	"\x05delta\x18\x02 \x01(\x05R\x05delta\"@\n" +
 	"\x13AdjustStockResponse\x12)\n" +
-	"\x05stock\x18\x01 \x01(\v2\x13.inventory.v1.StockR\x05stock\"x\n" +
-	"\x0eReserveRequest\x12A\n" +
+	"\x05stock\x18\x01 \x01(\v2\x13.inventory.v1.StockR\x05stock\"u\n" +
+	"\vReserveItem\x12A\n" +
 	"\n" +
 	"product_id\x18\x01 \x01(\v2\x18.orderhub.common.v1.UUIDB\b\xfaB\x05\x8a\x01\x02\x10\x01R\tproductId\x12#\n" +
-	"\bquantity\x18\x02 \x01(\rB\a\xfaB\x04*\x02(\x00R\bquantity\"d\n" +
+	"\bquantity\x18\x02 \x01(\rB\a\xfaB\x04*\x02 \x00R\bquantity\"\x8a\x01\n" +
+	"\x0eReserveRequest\x12=\n" +
+	"\border_id\x18\x01 \x01(\v2\x18.orderhub.common.v1.UUIDB\b\xfaB\x05\x8a\x01\x02\x10\x01R\aorderId\x129\n" +
+	"\x05items\x18\x02 \x03(\v2\x19.inventory.v1.ReserveItemB\b\xfaB\x05\x92\x01\x02\b\x01R\x05items\"d\n" +
 	"\rReserveOkItem\x127\n" +
 	"\n" +
 	"product_id\x18\x01 \x01(\v2\x18.orderhub.common.v1.UUIDR\tproductId\x12\x1a\n" +
@@ -1659,7 +1714,7 @@ func file_inventory_v1_inventory_proto_rawDescGZIP() []byte {
 	return file_inventory_v1_inventory_proto_rawDescData
 }
 
-var file_inventory_v1_inventory_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
+var file_inventory_v1_inventory_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
 var file_inventory_v1_inventory_proto_goTypes = []any{
 	(*Product)(nil),                  // 0: inventory.v1.Product
 	(*ProductInput)(nil),             // 1: inventory.v1.ProductInput
@@ -1682,87 +1737,90 @@ var file_inventory_v1_inventory_proto_goTypes = []any{
 	(*SetStockResponse)(nil),         // 18: inventory.v1.SetStockResponse
 	(*AdjustStockRequest)(nil),       // 19: inventory.v1.AdjustStockRequest
 	(*AdjustStockResponse)(nil),      // 20: inventory.v1.AdjustStockResponse
-	(*ReserveRequest)(nil),           // 21: inventory.v1.ReserveRequest
-	(*ReserveOkItem)(nil),            // 22: inventory.v1.ReserveOkItem
-	(*ReserveFailedItem)(nil),        // 23: inventory.v1.ReserveFailedItem
-	(*ReserveResponse)(nil),          // 24: inventory.v1.ReserveResponse
-	(*ReleaseRequest)(nil),           // 25: inventory.v1.ReleaseRequest
-	(*ConfirmRequest)(nil),           // 26: inventory.v1.ConfirmRequest
-	(*v1.UUID)(nil),                  // 27: orderhub.common.v1.UUID
-	(*timestamppb.Timestamp)(nil),    // 28: google.protobuf.Timestamp
-	(*wrapperspb.StringValue)(nil),   // 29: google.protobuf.StringValue
-	(*wrapperspb.Int64Value)(nil),    // 30: google.protobuf.Int64Value
-	(*wrapperspb.BoolValue)(nil),     // 31: google.protobuf.BoolValue
-	(*emptypb.Empty)(nil),            // 32: google.protobuf.Empty
+	(*ReserveItem)(nil),              // 21: inventory.v1.ReserveItem
+	(*ReserveRequest)(nil),           // 22: inventory.v1.ReserveRequest
+	(*ReserveOkItem)(nil),            // 23: inventory.v1.ReserveOkItem
+	(*ReserveFailedItem)(nil),        // 24: inventory.v1.ReserveFailedItem
+	(*ReserveResponse)(nil),          // 25: inventory.v1.ReserveResponse
+	(*ReleaseRequest)(nil),           // 26: inventory.v1.ReleaseRequest
+	(*ConfirmRequest)(nil),           // 27: inventory.v1.ConfirmRequest
+	(*v1.UUID)(nil),                  // 28: orderhub.common.v1.UUID
+	(*timestamppb.Timestamp)(nil),    // 29: google.protobuf.Timestamp
+	(*wrapperspb.StringValue)(nil),   // 30: google.protobuf.StringValue
+	(*wrapperspb.Int64Value)(nil),    // 31: google.protobuf.Int64Value
+	(*wrapperspb.BoolValue)(nil),     // 32: google.protobuf.BoolValue
+	(*emptypb.Empty)(nil),            // 33: google.protobuf.Empty
 }
 var file_inventory_v1_inventory_proto_depIdxs = []int32{
-	27, // 0: inventory.v1.Product.id:type_name -> orderhub.common.v1.UUID
-	27, // 1: inventory.v1.Product.vendor_id:type_name -> orderhub.common.v1.UUID
-	28, // 2: inventory.v1.Product.created_at:type_name -> google.protobuf.Timestamp
-	28, // 3: inventory.v1.Product.updated_at:type_name -> google.protobuf.Timestamp
-	27, // 4: inventory.v1.ProductInput.vendor_id:type_name -> orderhub.common.v1.UUID
-	29, // 5: inventory.v1.ProductPatch.sku:type_name -> google.protobuf.StringValue
-	29, // 6: inventory.v1.ProductPatch.name:type_name -> google.protobuf.StringValue
-	29, // 7: inventory.v1.ProductPatch.description:type_name -> google.protobuf.StringValue
-	30, // 8: inventory.v1.ProductPatch.price_cents:type_name -> google.protobuf.Int64Value
-	29, // 9: inventory.v1.ProductPatch.currency_code:type_name -> google.protobuf.StringValue
-	31, // 10: inventory.v1.ProductPatch.is_active:type_name -> google.protobuf.BoolValue
+	28, // 0: inventory.v1.Product.id:type_name -> orderhub.common.v1.UUID
+	28, // 1: inventory.v1.Product.vendor_id:type_name -> orderhub.common.v1.UUID
+	29, // 2: inventory.v1.Product.created_at:type_name -> google.protobuf.Timestamp
+	29, // 3: inventory.v1.Product.updated_at:type_name -> google.protobuf.Timestamp
+	28, // 4: inventory.v1.ProductInput.vendor_id:type_name -> orderhub.common.v1.UUID
+	30, // 5: inventory.v1.ProductPatch.sku:type_name -> google.protobuf.StringValue
+	30, // 6: inventory.v1.ProductPatch.name:type_name -> google.protobuf.StringValue
+	30, // 7: inventory.v1.ProductPatch.description:type_name -> google.protobuf.StringValue
+	31, // 8: inventory.v1.ProductPatch.price_cents:type_name -> google.protobuf.Int64Value
+	30, // 9: inventory.v1.ProductPatch.currency_code:type_name -> google.protobuf.StringValue
+	32, // 10: inventory.v1.ProductPatch.is_active:type_name -> google.protobuf.BoolValue
 	1,  // 11: inventory.v1.CreateProductRequest.product:type_name -> inventory.v1.ProductInput
 	0,  // 12: inventory.v1.CreateProductResponse.product:type_name -> inventory.v1.Product
-	27, // 13: inventory.v1.UpdateProductRequest.product_id:type_name -> orderhub.common.v1.UUID
+	28, // 13: inventory.v1.UpdateProductRequest.product_id:type_name -> orderhub.common.v1.UUID
 	2,  // 14: inventory.v1.UpdateProductRequest.patch:type_name -> inventory.v1.ProductPatch
 	0,  // 15: inventory.v1.UpdateProductResponse.product:type_name -> inventory.v1.Product
-	27, // 16: inventory.v1.DeleteProductRequest.product_id:type_name -> orderhub.common.v1.UUID
-	27, // 17: inventory.v1.GetProductRequest.product_id:type_name -> orderhub.common.v1.UUID
+	28, // 16: inventory.v1.DeleteProductRequest.product_id:type_name -> orderhub.common.v1.UUID
+	28, // 17: inventory.v1.GetProductRequest.product_id:type_name -> orderhub.common.v1.UUID
 	0,  // 18: inventory.v1.GetProductResponse.product:type_name -> inventory.v1.Product
-	27, // 19: inventory.v1.ListProductsRequest.vendor_id:type_name -> orderhub.common.v1.UUID
+	28, // 19: inventory.v1.ListProductsRequest.vendor_id:type_name -> orderhub.common.v1.UUID
 	0,  // 20: inventory.v1.ListProductsResponse.products:type_name -> inventory.v1.Product
-	27, // 21: inventory.v1.BatchGetProductsRequest.product_ids:type_name -> orderhub.common.v1.UUID
+	28, // 21: inventory.v1.BatchGetProductsRequest.product_ids:type_name -> orderhub.common.v1.UUID
 	0,  // 22: inventory.v1.BatchGetProductsResponse.products:type_name -> inventory.v1.Product
-	27, // 23: inventory.v1.Stock.product_id:type_name -> orderhub.common.v1.UUID
-	28, // 24: inventory.v1.Stock.updated_at:type_name -> google.protobuf.Timestamp
-	27, // 25: inventory.v1.GetStockRequest.product_id:type_name -> orderhub.common.v1.UUID
+	28, // 23: inventory.v1.Stock.product_id:type_name -> orderhub.common.v1.UUID
+	29, // 24: inventory.v1.Stock.updated_at:type_name -> google.protobuf.Timestamp
+	28, // 25: inventory.v1.GetStockRequest.product_id:type_name -> orderhub.common.v1.UUID
 	14, // 26: inventory.v1.GetStockResponse.stock:type_name -> inventory.v1.Stock
-	27, // 27: inventory.v1.SetStockRequest.product_id:type_name -> orderhub.common.v1.UUID
+	28, // 27: inventory.v1.SetStockRequest.product_id:type_name -> orderhub.common.v1.UUID
 	14, // 28: inventory.v1.SetStockResponse.stock:type_name -> inventory.v1.Stock
-	27, // 29: inventory.v1.AdjustStockRequest.product_id:type_name -> orderhub.common.v1.UUID
+	28, // 29: inventory.v1.AdjustStockRequest.product_id:type_name -> orderhub.common.v1.UUID
 	14, // 30: inventory.v1.AdjustStockResponse.stock:type_name -> inventory.v1.Stock
-	27, // 31: inventory.v1.ReserveRequest.product_id:type_name -> orderhub.common.v1.UUID
-	27, // 32: inventory.v1.ReserveOkItem.product_id:type_name -> orderhub.common.v1.UUID
-	27, // 33: inventory.v1.ReserveFailedItem.product_id:type_name -> orderhub.common.v1.UUID
-	22, // 34: inventory.v1.ReserveResponse.ok_items:type_name -> inventory.v1.ReserveOkItem
-	23, // 35: inventory.v1.ReserveResponse.failed_items:type_name -> inventory.v1.ReserveFailedItem
-	27, // 36: inventory.v1.ReleaseRequest.order_id:type_name -> orderhub.common.v1.UUID
-	27, // 37: inventory.v1.ConfirmRequest.order_id:type_name -> orderhub.common.v1.UUID
-	3,  // 38: inventory.v1.InventoryService.CreateProduct:input_type -> inventory.v1.CreateProductRequest
-	5,  // 39: inventory.v1.InventoryService.UpdateProduct:input_type -> inventory.v1.UpdateProductRequest
-	8,  // 40: inventory.v1.InventoryService.GetProduct:input_type -> inventory.v1.GetProductRequest
-	10, // 41: inventory.v1.InventoryService.ListProducts:input_type -> inventory.v1.ListProductsRequest
-	7,  // 42: inventory.v1.InventoryService.DeleteProduct:input_type -> inventory.v1.DeleteProductRequest
-	12, // 43: inventory.v1.InventoryService.BatchGetProducts:input_type -> inventory.v1.BatchGetProductsRequest
-	15, // 44: inventory.v1.InventoryService.GetStock:input_type -> inventory.v1.GetStockRequest
-	17, // 45: inventory.v1.InventoryService.SetStock:input_type -> inventory.v1.SetStockRequest
-	19, // 46: inventory.v1.InventoryService.AdjustStock:input_type -> inventory.v1.AdjustStockRequest
-	21, // 47: inventory.v1.InventoryService.Reserve:input_type -> inventory.v1.ReserveRequest
-	25, // 48: inventory.v1.InventoryService.Release:input_type -> inventory.v1.ReleaseRequest
-	26, // 49: inventory.v1.InventoryService.Confirm:input_type -> inventory.v1.ConfirmRequest
-	4,  // 50: inventory.v1.InventoryService.CreateProduct:output_type -> inventory.v1.CreateProductResponse
-	6,  // 51: inventory.v1.InventoryService.UpdateProduct:output_type -> inventory.v1.UpdateProductResponse
-	9,  // 52: inventory.v1.InventoryService.GetProduct:output_type -> inventory.v1.GetProductResponse
-	11, // 53: inventory.v1.InventoryService.ListProducts:output_type -> inventory.v1.ListProductsResponse
-	32, // 54: inventory.v1.InventoryService.DeleteProduct:output_type -> google.protobuf.Empty
-	13, // 55: inventory.v1.InventoryService.BatchGetProducts:output_type -> inventory.v1.BatchGetProductsResponse
-	16, // 56: inventory.v1.InventoryService.GetStock:output_type -> inventory.v1.GetStockResponse
-	18, // 57: inventory.v1.InventoryService.SetStock:output_type -> inventory.v1.SetStockResponse
-	20, // 58: inventory.v1.InventoryService.AdjustStock:output_type -> inventory.v1.AdjustStockResponse
-	24, // 59: inventory.v1.InventoryService.Reserve:output_type -> inventory.v1.ReserveResponse
-	32, // 60: inventory.v1.InventoryService.Release:output_type -> google.protobuf.Empty
-	32, // 61: inventory.v1.InventoryService.Confirm:output_type -> google.protobuf.Empty
-	50, // [50:62] is the sub-list for method output_type
-	38, // [38:50] is the sub-list for method input_type
-	38, // [38:38] is the sub-list for extension type_name
-	38, // [38:38] is the sub-list for extension extendee
-	0,  // [0:38] is the sub-list for field type_name
+	28, // 31: inventory.v1.ReserveItem.product_id:type_name -> orderhub.common.v1.UUID
+	28, // 32: inventory.v1.ReserveRequest.order_id:type_name -> orderhub.common.v1.UUID
+	21, // 33: inventory.v1.ReserveRequest.items:type_name -> inventory.v1.ReserveItem
+	28, // 34: inventory.v1.ReserveOkItem.product_id:type_name -> orderhub.common.v1.UUID
+	28, // 35: inventory.v1.ReserveFailedItem.product_id:type_name -> orderhub.common.v1.UUID
+	23, // 36: inventory.v1.ReserveResponse.ok_items:type_name -> inventory.v1.ReserveOkItem
+	24, // 37: inventory.v1.ReserveResponse.failed_items:type_name -> inventory.v1.ReserveFailedItem
+	28, // 38: inventory.v1.ReleaseRequest.order_id:type_name -> orderhub.common.v1.UUID
+	28, // 39: inventory.v1.ConfirmRequest.order_id:type_name -> orderhub.common.v1.UUID
+	3,  // 40: inventory.v1.InventoryService.CreateProduct:input_type -> inventory.v1.CreateProductRequest
+	5,  // 41: inventory.v1.InventoryService.UpdateProduct:input_type -> inventory.v1.UpdateProductRequest
+	8,  // 42: inventory.v1.InventoryService.GetProduct:input_type -> inventory.v1.GetProductRequest
+	10, // 43: inventory.v1.InventoryService.ListProducts:input_type -> inventory.v1.ListProductsRequest
+	7,  // 44: inventory.v1.InventoryService.DeleteProduct:input_type -> inventory.v1.DeleteProductRequest
+	12, // 45: inventory.v1.InventoryService.BatchGetProducts:input_type -> inventory.v1.BatchGetProductsRequest
+	15, // 46: inventory.v1.InventoryService.GetStock:input_type -> inventory.v1.GetStockRequest
+	17, // 47: inventory.v1.InventoryService.SetStock:input_type -> inventory.v1.SetStockRequest
+	19, // 48: inventory.v1.InventoryService.AdjustStock:input_type -> inventory.v1.AdjustStockRequest
+	22, // 49: inventory.v1.InventoryService.Reserve:input_type -> inventory.v1.ReserveRequest
+	26, // 50: inventory.v1.InventoryService.Release:input_type -> inventory.v1.ReleaseRequest
+	27, // 51: inventory.v1.InventoryService.Confirm:input_type -> inventory.v1.ConfirmRequest
+	4,  // 52: inventory.v1.InventoryService.CreateProduct:output_type -> inventory.v1.CreateProductResponse
+	6,  // 53: inventory.v1.InventoryService.UpdateProduct:output_type -> inventory.v1.UpdateProductResponse
+	9,  // 54: inventory.v1.InventoryService.GetProduct:output_type -> inventory.v1.GetProductResponse
+	11, // 55: inventory.v1.InventoryService.ListProducts:output_type -> inventory.v1.ListProductsResponse
+	33, // 56: inventory.v1.InventoryService.DeleteProduct:output_type -> google.protobuf.Empty
+	13, // 57: inventory.v1.InventoryService.BatchGetProducts:output_type -> inventory.v1.BatchGetProductsResponse
+	16, // 58: inventory.v1.InventoryService.GetStock:output_type -> inventory.v1.GetStockResponse
+	18, // 59: inventory.v1.InventoryService.SetStock:output_type -> inventory.v1.SetStockResponse
+	20, // 60: inventory.v1.InventoryService.AdjustStock:output_type -> inventory.v1.AdjustStockResponse
+	25, // 61: inventory.v1.InventoryService.Reserve:output_type -> inventory.v1.ReserveResponse
+	33, // 62: inventory.v1.InventoryService.Release:output_type -> google.protobuf.Empty
+	33, // 63: inventory.v1.InventoryService.Confirm:output_type -> google.protobuf.Empty
+	52, // [52:64] is the sub-list for method output_type
+	40, // [40:52] is the sub-list for method input_type
+	40, // [40:40] is the sub-list for extension type_name
+	40, // [40:40] is the sub-list for extension extendee
+	0,  // [0:40] is the sub-list for field type_name
 }
 
 func init() { file_inventory_v1_inventory_proto_init() }
@@ -1776,7 +1834,7 @@ func file_inventory_v1_inventory_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_inventory_v1_inventory_proto_rawDesc), len(file_inventory_v1_inventory_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   27,
+			NumMessages:   28,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

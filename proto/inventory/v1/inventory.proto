@@ -147,9 +147,14 @@ message AdjustStockResponse {
   Stock stock = 1;
 }
 
-message ReserveRequest {
+message ReserveItem {
   orderhub.common.v1.UUID product_id = 1 [(validate.rules).message.required = true];
-  uint32 quantity = 2 [(validate.rules).uint32 = {gte: 0}];
+  uint32 quantity                    = 2 [(validate.rules).uint32 = {gt: 0}];
+}
+
+message ReserveRequest {
+  orderhub.common.v1.UUID order_id = 1 [(validate.rules).message.required = true];
+  repeated ReserveItem items       = 2 [(validate.rules).repeated = {min_items: 1}];
 }
 
 message ReserveOkItem {

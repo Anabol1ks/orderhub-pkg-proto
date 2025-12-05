@@ -1365,7 +1365,7 @@ func (x *ReserveOkItem) GetQuantity() uint32 {
 type ReserveFailedItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ProductId     *v1.UUID               `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
-	Requested     string                 `protobuf:"bytes,2,opt,name=requested,proto3" json:"requested,omitempty"`
+	Requested     uint32                 `protobuf:"varint,2,opt,name=requested,proto3" json:"requested,omitempty"`
 	Reason        string                 `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1408,11 +1408,11 @@ func (x *ReserveFailedItem) GetProductId() *v1.UUID {
 	return nil
 }
 
-func (x *ReserveFailedItem) GetRequested() string {
+func (x *ReserveFailedItem) GetRequested() uint32 {
 	if x != nil {
 		return x.Requested
 	}
-	return ""
+	return 0
 }
 
 func (x *ReserveFailedItem) GetReason() string {
@@ -1678,7 +1678,7 @@ const file_inventory_v1_inventory_proto_rawDesc = "" +
 	"\x11ReserveFailedItem\x127\n" +
 	"\n" +
 	"product_id\x18\x01 \x01(\v2\x18.orderhub.common.v1.UUIDR\tproductId\x12\x1c\n" +
-	"\trequested\x18\x02 \x01(\tR\trequested\x12 \n" +
+	"\trequested\x18\x02 \x01(\rR\trequested\x12 \n" +
 	"\x06reason\x18\x03 \x01(\tB\b\xfaB\x05r\x03\x18\xc8\x01R\x06reason\"\x8d\x01\n" +
 	"\x0fReserveResponse\x126\n" +
 	"\bok_items\x18\x01 \x03(\v2\x1b.inventory.v1.ReserveOkItemR\aokItems\x12B\n" +
